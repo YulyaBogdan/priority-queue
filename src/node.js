@@ -36,29 +36,32 @@ class Node {
 
 	swapWithParent() {
 		if (this.parent !== null) {
-            var tempLeft = this.left;
-            var tempRight = this.right;
-            var tempParent = this.parent.parent;
-            if (this.parent.data < this.data) {
+
+			var tempLeft = this.left;
+			var tempRight = this.right;
+			var tempParent = this.parent.parent;
+			if (this.parent.data < this.data) {
                 this.right = this.parent;
                 this.left = this.parent.left;
+                this.right.parent = this;
+                if(this.left !== null)
+                	this.left.parent = this;
 			}
-            else {
+			else {
                 this.left = this.parent;
                 this.right = this.parent.right;
+                this.left.parent = this;
+                if(this.right !== null)
+                	this.right.parent = this;
 			}
-			// if(this.parent.parent !== null){
-             //    if (this.parent.parent.data < this.parent.data)
-             //        this.parent.parent.right = this;
-             //    else
-             //        this.parent.parent.left = this;
-			// }
             this.parent.parent = this;
-            this.parent.left = tempLeft;
-            this.parent.right = tempRight;
-            // this.parent.left.parent = this.parent;
-            // this.parent.right.parent = this.parent;
-            this.parent = tempParent;
+			this.parent.left = tempLeft;
+			if (this.parent.left !== null)
+				this.parent.left.parent = this.parent;
+			this.parent.right = tempRight;
+            if (this.parent.right !== null)
+                this.parent.right.parent = this.parent;
+			this.parent = tempParent;
 		}
 
 	}
