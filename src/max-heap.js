@@ -28,7 +28,7 @@ class MaxHeap {
 	}
 
 	size() {
-		
+		return this.parentNodes.length;
 	}
 
 	isEmpty() {
@@ -42,23 +42,18 @@ class MaxHeap {
 	}
 
 	insertNode(node) {
-		if (this.isEmpty())
+   		if (this.isEmpty())
 			this.root = node;
 		else {
-			for (let i  = 0; i < this.parentNodes.length; i++) {
-				if (this.parentNodes[i].left === null) {
-                    this.parentNodes[i].left = node;
-                    node.parent = this.parentNodes[i];
-                    break;
-				}
+			if (this.parentNodes[0].left === null) {
+                this.parentNodes[0].left = node;
+				node.parent = this.parentNodes[0];
 			}
-            for (let i = 0; i < this.parentNodes.length; i++) {
-                if (this.parentNodes[i].right === null) {
-                    this.parentNodes[i].right = node;
-                    node.parent = this.parentNodes[i];
-                    break;
-                }
-            }
+			else {
+                this.parentNodes[0].right = node;
+                node.parent = this.parentNodes[0];
+                this.parentNodes.shift();
+			}
 		}
 		this.parentNodes.push(node);
 	}
