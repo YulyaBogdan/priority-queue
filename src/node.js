@@ -8,7 +8,7 @@ class Node {
 	}
 
 	appendChild(node) {
-		if (this.left === null && this.data > node.data){
+		if (this.left === null){
             this.left = node;
             node.parent = this;
 		}
@@ -21,7 +21,7 @@ class Node {
 	removeChild(node) {
 		if (node.parent !== this) throwError(err);
 		if (node.parent !== null) {
-            if (node.parent.data < node.data)
+            if (node.parent.right === node)
                 node.parent.right = null;
             else
                 node.parent.left = null;
@@ -40,7 +40,14 @@ class Node {
 			var tempLeft = this.left;
 			var tempRight = this.right;
 			var tempParent = this.parent.parent;
-			if (this.parent.data < this.data) {
+			if(this.parent.parent !== null) {
+                if (this.parent.parent.right === this.parent) {
+                	this.parent.parent.right = this;
+                }
+                else
+                    this.parent.parent.left = this;
+			}
+			if (this.parent.right === this) {
                 this.right = this.parent;
                 this.left = this.parent.left;
                 this.right.parent = this;
@@ -54,7 +61,6 @@ class Node {
                 if(this.right !== null)
                 	this.right.parent = this;
 			}
-            this.parent.parent = this;
 			this.parent.left = tempLeft;
 			if (this.parent.left !== null)
 				this.parent.left.parent = this.parent;
